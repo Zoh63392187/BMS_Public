@@ -116,7 +116,9 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 						<li>All transactions for the game is avaliable on the Burst Explorer</li>
 						<li>Spin 10 Burst: 99% goes to the Bank, 1% system fee = 99% Payout!</li>
 						<li>Payout can be forced by the system due to maintenance (rare occasions)</li>
+						<li>BSM is a personal project by Zoh</li>
 					</ul>
+					<center><span>Developed by  Zoh <a href="https://twitter.com/Zoh63392187" target="_blank" class="text-info"><img src="images/twitter.png"></a> Member of Burst Apps Team <a href="https://twitter.com/BurstAppsTeam" target="_blank" class="text-info"><img src="images/twitter.png"></a><br>Donations: <b>BURST-NMEA-GRHZ-BRFE-5SG6P</b></span></center>
 				</td>
 			</tr>
 		</table>		
