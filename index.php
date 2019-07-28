@@ -3,21 +3,6 @@ if(empty($_SERVER['HTTPS'])) {
     header("Location: https://".$_SERVER['HTTP_HOST']);
     exit;
 }
-?>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133746696-3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-133746696-3');
-</script>
-<?
-include 'config.php';
-
-$Burst_balance = 0;
 
 echo '<center><span id="welcome_message"></span></center>';
 echo "<center><img src='images/badges_BSM.png'></center>";
