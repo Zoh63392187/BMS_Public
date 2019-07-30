@@ -3,12 +3,23 @@ if(empty($_SERVER['HTTPS'])) {
     header("Location: https://".$_SERVER['HTTP_HOST']);
     exit;
 }
+header('Access-Control-Allow-Origin: *');
 
 echo '<center><span id="welcome_message"></span></center>';
 echo "<center><img src='images/badges_BSM.png'></center>";
 ?>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133746696-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133746696-3');
+</script>
 <script src="jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <div style="width:560px;margin:auto;border: 1px dotted;" border="1">
@@ -118,15 +129,12 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 						<li>Payout can be forced by the system due to maintenance (rare occasions)</li>
 						<li>BSM is a personal project by Zoh</li>
 					</ul>
-					<center><span>Developed by  Zoh <a href="https://twitter.com/Zoh63392187" target="_blank" class="text-info"><img src="images/twitter.png"></a> Member of Burst Apps Team <a href="https://twitter.com/BurstAppsTeam" target="_blank" class="text-info"><img src="images/twitter.png"></a><br>Donations: <b>BURST-NMEA-GRHZ-BRFE-5SG6P</b></span></center>
+					<center><span>Developed by  Zoh <a href="https://twitter.com/Zoh63392187" target="_blank" class="text-info"><img src="images/twitter.png"></a><br>Donations: <b>BURST-NMEA-GRHZ-BRFE-5SG6P</b></span></center>
 				</td>
 			</tr>
 		</table>		
 	</form>
 </div>
-<?if($result['transaction_id']){?>
-<center><b>Transaction: # <a href="https://explorer.burstcoin.network/?action=transaction&id=<?=$result['transaction_id']?>" target="_blank"><?=$result['transaction_id']?></a></b></center>
-<?}?>
 <br><br>
 <script>
 var slotajax = false;
@@ -138,7 +146,6 @@ var onlineusers = false;
 var current_version = false;
 var version = false;
 var winner_id = false;
-var welcome = '<?php echo $welcome;?>';
 document.slots.gold.value=startgold;
 document.getElementById('autos').disabled = true;
 
@@ -146,7 +153,6 @@ onlinestats();
 winnerstats();
 loginstats();
 balancestats();
-document.getElementById("winning_players").innerHTML = '<MARQUEE LOOP="1">' + welcome + '</MARQUEE>';
 
 if(startgold <= 9){
 	document.getElementById('sub').disabled = true;
@@ -171,13 +177,14 @@ function show_whos_online() {
 function versionControl(){
 	$.ajax({
 		type: 'GET',
-		url: 'https://burstcoin.dk/version',
+		url: 'https://burstcoin.dk/version.php',
 		dataType: 'json',
 		cache: false,
-		async: false,
+		async: true,
 		success: function(response) {
 			version = response;
-			if(current_version!='' && current_version!=version){
+			//console.log(version.version_nr);
+			if(current_version!='' && current_version!=version.version_nr){
 				document.slots.gold.value=0;
 				document.getElementById('sub').disabled = true;
 				document.getElementById('auto').disabled = true;
@@ -185,7 +192,7 @@ function versionControl(){
 				document.getElementById('betauto').disabled = true;
 				document.getElementById("banner").innerHTML = '<img src="images/264608_alert_256x256.png" width="26px" style="margin-bottom:5px;"> New version avaliable - Please reload <img src="images/264608_alert_256x256.png" width="26px" style="margin-bottom:5px;">';
 			}
-			current_version = version;
+			current_version = version.version_nr;
 		}
 	});
 }
@@ -196,7 +203,7 @@ function onlinestats(){
 		url: 'https://burstcoin.dk/ajax_online.php',
 		dataType: 'json',
 		cache: false,
-		async: false,
+		async: true,
 		success: function(response) {
 			onlineusers = response;
 			document.getElementById("users_online").innerHTML = 'Users online: ' + onlineusers.online_users.count;
@@ -219,7 +226,7 @@ function winnerstats(){
 		url: 'https://burstcoin.dk/ajax_highscore.php',
 		dataType: 'json',
 		cache: false,
-		async: false,
+		async: true,
 		success: function(response) {
 			winners = response;
 			document.getElementById("highscore_from_api").innerHTML = winners.highscore;
@@ -237,7 +244,7 @@ function loginstats(){
 		success: function(response) {
 			login = response;
 			startgold=login.balance;
-			document.getElementById("welcome_message").innerHTML = login.welcome_msg;
+			document.getElementById("winning_players").innerHTML = '<MARQUEE LOOP="1">' + login.welcome_msg + '</MARQUEE>';
 			document.slots.gold.value=login.balance;
 			
 		}
@@ -250,7 +257,7 @@ function balancestats(){
 		url: 'https://burstcoin.dk/ajax_balance.php',
 		dataType: 'json',
 		cache: false,
-		async: false,
+		async: true,
 		success: function(response) {
 			api_balance = response;
 			document.getElementById("pot75").innerHTML = Math.floor((api_balance.balance.balance/100)*75) + ' Burst (75%)';
@@ -406,7 +413,7 @@ function spinem() {
 		document.getElementById("pot1").innerHTML = Math.floor((slotajax.potsize/100)*1) + ' Burst (1%)';
 		document.getElementById("pot05").innerHTML = Math.floor((slotajax.potsize/100)*0.5) + ' Burst (0.5%)';
 		
-		document.getElementById("banksize").innerHTML = 'Bank: ' + Math.floor(slotajax.potsize) + ' Burst';
+		document.getElementById("banksize").innerHTML = '<h3><center><a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank"><div id="banksize" title="Bank size">Bank: ' + Math.floor(slotajax.potsize) + ' Burst</div></a></center></h3><hr>';
 		
 		document.slots.pay_to_user_total.value=slotajax.pay_to_user_total;
 		document.slots.spent_by_user_total.value=slotajax.spent_by_user_total;
