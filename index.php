@@ -75,7 +75,7 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 				<td>
 					<center><hr>
 						<table width=100% border=0>
-							<tr align="center"><td colspan=3><h3><center><a href="https://explorer.burstcoin.network/?action=account&account=<?=$accountID?>" target="_blank"><div id="banksize" title="Bank size">Bank: <?=(int)$jackpot['balance']?> Burst</div></a></center></h3><hr></td></tr>
+							<tr align="center"><td colspan=3><span id="banksize"></span></td></tr>
 							<tr align="center"><td colspan=3><h5><span title="Based on current balance"><center>Current High Score</center></span></h5></td></tr>
 							<tr align="center"><td><b>1. place</td><td><b>2. place</b></td><td><b>3. place</b></td></tr>
 							<tr align="center" id="highscore_from_api"></tr>
@@ -107,11 +107,11 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 			<tr>
 				<td><hr>
 					<ul>
-						<li>To play: Send Burst to <a href="https://explorer.burstcoin.network/?action=account&account=<?=$accountID?>" target="_blank"><?=$accountRS?></a></li>
+						<li>To play: Send Burst to <span id="to_play_bank"></span></li>
 						<li>Payments less than 10 Burst and/or with decimals will be discarded/lost</li>
 						<li>Payments needs to have 1 confirmation</li>
 						<li>You will receive an encrypted message in you BRS wallet with a link</li>
-						<li>Payout minimum is 10 Burst</li>
+						<li>Payout minimum is 2 Burst</li>
 						<li>1 Burst will be substracted for transaction fee (message and payout)</li>
 						<li>All transactions for the game is avaliable on the Burst Explorer</li>
 						<li>Spin 10 Burst: 99% goes to the Bank, 1% system fee = 99% Payout!</li>
@@ -132,7 +132,7 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 var slotajax = false;
 var auto_run = false;
 var endless = false;
-var startgold = <?Php echo $Burst_balance;?>;
+var startgold = 0;
 var timer;
 var onlineusers = false;
 var current_version = false;
@@ -152,9 +152,12 @@ if(startgold <= 9){
 	document.getElementById('sub').disabled = true;
 	document.getElementById('auto').disabled = true;
 	document.getElementById('betauto').disabled = true;
-	document.getElementById('payout').disabled = true;
 	document.getElementById('autos').disabled = true;
 }
+if(startgold <= 1){
+	document.getElementById('payout').disabled = true;
+}
+
 
 function show_whos_online() {
   var x = document.getElementById("show_onliners");
@@ -224,7 +227,6 @@ function winnerstats(){
 	});
 }
 
-
 function loginstats(){
 	$.ajax({
 		type: 'GET',
@@ -256,8 +258,10 @@ function balancestats(){
 			document.getElementById("pot5").innerHTML = Math.floor((api_balance.balance.balance/100)*5) + ' Burst (5%)';
 			document.getElementById("pot1").innerHTML = Math.floor((api_balance.balance.balance/100)*1) + ' Burst (1%)';
 			document.getElementById("pot05").innerHTML = Math.floor((api_balance.balance.balance/100)*0.5) + ' Burst (0.5%)';
-			
-			document.getElementById("banksize").innerHTML = 'Bank: ' + Math.floor(api_balance.balance.balance) + ' Burst';
+				
+			document.getElementById("banksize").innerHTML = '<h3><center><a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank"><div id="banksize" title="Bank size">Bank: ' + Math.floor(api_balance.balance.balance) + ' Burst</div></a></center></h3><hr>';
+			document.getElementById("to_play_bank").innerHTML = '<a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank">'+ api_balance.bankRS;
+			//console.log(api_balance.bankID);
 		}
 	});
 }
