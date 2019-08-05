@@ -74,7 +74,13 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 							<td>
 								<div style="width:360px;text-align:center;height:28px;border: 1px dotted;" border="1" height="12px;">
 									<span name="banner" id="banner" class="blink">
-										Spin to win!
+										<?php 
+											if($_GET['idk']==''){
+												echo '<a href="#" data-toggle="modal" data-target="#howto">  How to play - click here</a>';
+											} else {
+												echo 'Spin to win!';
+											}
+										?>
 									<span>
 								</div>							
 							</td>
@@ -129,13 +135,36 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 						<li>Payout can be forced by the system due to maintenance (rare occasions)</li>
 						<li>BSM is a personal project by Zoh</li>
 					</ul>
-					<center><span>Developed by  Zoh <a href="https://twitter.com/Zoh63392187" target="_blank" class="text-info"><img src="images/twitter.png"></a><br>Donations: <b>BURST-NMEA-GRHZ-BRFE-5SG6P</b></span></center>
+					<center><span>Developed by  Zoh <a href="https://twitter.com/Zoh63392187" target="_blank" class="text-info"><img src="images/twitter.png"></a></span></center>
 				</td>
 			</tr>
 		</table>		
 	</form>
 </div>
 <br><br>
+<!-- Modal -->
+<div class="modal fade" id="howto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">How to play</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Send the amount of Burst you wish to play for on the Burst Slot Machine (BSM) to <span id="to_play_bank_1"></span><br><br>
+		Once the payment is recived the system will send you a message with a unique login to you BRS wallet.<br><br>
+		Click the link in the message and play :)<br><br>
+		<i>* Please read all the rules on the main page</i>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 var slotajax = false;
 var auto_run = false;
@@ -268,6 +297,7 @@ function balancestats(){
 				
 			document.getElementById("banksize").innerHTML = '<h3><center><a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank"><div id="banksize" title="Bank size">Bank: ' + Math.floor(api_balance.balance.balance) + ' Burst</div></a></center></h3><hr>';
 			document.getElementById("to_play_bank").innerHTML = '<a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank">'+ api_balance.bankRS;
+			document.getElementById("to_play_bank_1").innerHTML = '<a href="https://explorer.burstcoin.network/?action=account&account='+ api_balance.bankID +'" target="_blank">'+ api_balance.bankRS;
 			//console.log(api_balance.bankID);
 		}
 	});
@@ -280,7 +310,7 @@ setInterval(function() {
 }, 15 * 1000); // 60 * 1000 milsec
 
 function do_payout(){
-	var pay = confirm('Payout ' + document.slots.gold.value + ' Burst - are you sure?');
+	var pay = confirm('Payout ' + document.slots.gold.value + ' Burst?');
 	if(pay == true){
 		$.ajax({
 			type: 'GET',
@@ -433,7 +463,7 @@ function spinem() {
 			
 		}
 	}
-	if(Math.floor(document.slots.gold.value)<=9){
+	if(Math.floor(document.slots.gold.value)<=1){
 		document.getElementById('payout').disabled = true;
 	}
 }
