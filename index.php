@@ -184,7 +184,7 @@ winnerstats();
 loginstats();
 balancestats();
 
-if(startgold <= 9){
+if(startgold <= 0){
 	document.getElementById('sub').disabled = true;
 	document.getElementById('auto').disabled = true;
 	document.getElementById('betauto').disabled = true;
@@ -308,7 +308,7 @@ setInterval(function() {
     onlinestats();
 	winnerstats();
 	versionControl();
-	if(running == true){
+	if(running == false){
 		balancestats();
 	}
 }, 15 * 1000); // 60 * 1000 milsec
