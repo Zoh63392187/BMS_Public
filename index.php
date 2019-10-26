@@ -11,7 +11,7 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width">
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133746696-3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -175,6 +175,7 @@ var onlineusers = false;
 var current_version = false;
 var version = false;
 var winner_id = false;
+var running = false;
 document.slots.gold.value=startgold;
 document.getElementById('autos').disabled = true;
 
@@ -307,7 +308,9 @@ setInterval(function() {
     onlinestats();
 	winnerstats();
 	versionControl();
-	balancestats();
+	if(running == true){
+		balancestats();
+	}
 }, 15 * 1000); // 60 * 1000 milsec
 
 function do_payout(){
@@ -393,6 +396,7 @@ function ajaxUpdate(){
 }
 
 function spinem() {
+	running = true;
 	document.getElementById('sub').disabled = true;
 	document.getElementById('auto').disabled = true;
 	document.getElementById('payout').disabled = true;
@@ -467,6 +471,7 @@ function spinem() {
 	if(Math.floor(document.slots.gold.value)<=1){
 		document.getElementById('payout').disabled = true;
 	}
+	running = false;
 }
 
 function BlinkingText(){
