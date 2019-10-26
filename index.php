@@ -36,7 +36,7 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 					<table width="100%">
 						<tr align="center">
 							<td width="25%"> Burst Balance:<br><input type=box size=5 name="gold" READONLY disabled="disabled" id="gold" size=10></td>
-							<td width="25%">Your bet:<br><input type=box size=5 name="bet" value="10" disabled="disabled" size=10></td>
+							<td width="25%">Your bet:<br><input type=box size=5 name="bet" value="1" disabled="disabled" size=10></td>
 							<td width="25%" title="Enter the amount of Burst you want to use">Auto bet:<br><input type=box size=5 name="betauto" id="betauto" value="0" size=10></td>
 							<td width="25%" title="Burst balance for this session">Balance:<br><input type=box size=5 name="bstatus" id="bstatus" value="0" size=10 disabled="disabled"></td>
 						</tr>
@@ -307,6 +307,7 @@ setInterval(function() {
     onlinestats();
 	winnerstats();
 	versionControl();
+	balancestats();
 }, 15 * 1000); // 60 * 1000 milsec
 
 function do_payout(){
@@ -365,7 +366,7 @@ function rollem () {
 		}
 		return;
 	}
-	if(auto_run == true && Math.floor(document.slots.betauto.value) < 10 && endless==false){
+	if(auto_run == true && Math.floor(document.slots.betauto.value) < 1 && endless==false){
 		autostop();
 		return;
 	}
@@ -451,7 +452,7 @@ function spinem() {
 		
 		if(auto_run === true){
 			if(endless===false){
-				document.slots.betauto.value=document.slots.betauto.value-10;
+				document.slots.betauto.value=document.slots.betauto.value-1;
 			}
 			if(slotajax.reward>=1){
 				setTimeout(function(){
