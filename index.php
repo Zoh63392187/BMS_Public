@@ -93,7 +93,7 @@ echo "<center><img src='images/badges_BSM.png'></center>";
 					<center><hr>
 						<table width=100% border=0>
 							<tr align="center"><td colspan=3><span id="banksize"></span></td></tr>
-							<tr align="center"><td colspan=3><h5><span title="Based on current balance"><center>Current High Score</center></span></h5></td></tr>
+							<tr align="center"><td colspan=3><h5><span title="Based on the winning balance last 14 days"><center>Current High Score</center></span></h5></td></tr>
 							<tr align="center"><td><b>1. place</td><td><b>2. place</b></td><td><b>3. place</b></td></tr>
 							<tr align="center" id="highscore_from_api"></tr>
 							<tr align="center"><td colspan=3><font size=+1><hr><h5><center>Winnings</center></h5></td></tr>							
